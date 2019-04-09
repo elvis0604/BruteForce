@@ -87,20 +87,26 @@ public class Generator {
 
 	public static void main(String[] args) throws Exception
 	{
-		String username = "RiceChau";
-		String password = "Be4r";
-		String salt = getSaltString();
-		int implement = 2;
-		
-        String securePassword = getSHA256SecurePassword(password, salt);
-        
-        String contextToSave = format(username, salt, securePassword, implement);
-        System.out.println(contextToSave);
-        
-        writeFile("pwd.txt", contextToSave);
-        String[] arr = readFile("pwd.txt");
-        
-        String test = getSHA256SecurePassword(password, arr[1]);
-        System.out.println(test);
+		if (args.length != 2) 
+        {
+            System.err.println("Usage: java <password | implementation (0 - 4)>");
+        } else 
+        {
+			String username = "RiceChau";
+			String password = args[0];
+			int implement = Integer.parseInt(args[1]);
+			String salt = getSaltString();
+			
+	        String securePassword = getSHA256SecurePassword(password, salt);
+	        
+	        String contextToSave = format(username, salt, securePassword, implement);
+	        System.out.println(contextToSave);
+	        
+	        writeFile("pwd.txt", contextToSave);
+	        //String[] arr = readFile("pwd.txt");
+	        
+	        //String test = getSHA256SecurePassword(password, arr[1]);
+	        //System.out.println(test);
+        }
 	}
 }

@@ -94,6 +94,7 @@ public class Cracker
         for (int length = crack.min; length <= crack.max; length++) // Change crack.min and crack.max for number of characters to bruteforce. 
         	crack.generate("", 0, length); //prepend_string, pos, length
         
+        long startTime = System.currentTimeMillis();
         for(int i = 0; i < Cracker.combination.size(); i++)
         {
         	System.out.println("Comparing: " + Cracker.combination.get(i));
@@ -109,6 +110,10 @@ public class Cracker
 			if(generatedPassword.equals(hash))
 			{
 				System.out.println("Found");
+				long stopTime = System.currentTimeMillis();
+		        float elapsedTime = stopTime - startTime;
+		        System.out.println("Cracking time: " + elapsedTime);
+		        System.out.println("Number of trials: " + (i + 1)); //Since counting from 0
 				return true;
 			}
         }
@@ -119,7 +124,10 @@ public class Cracker
 	{
 		// TODO Auto-generated method stub
 		String[] arr = readFile("pwd.txt");
-		cracking(arr[2], arr[1], arr[3]);
-		
+		boolean check = cracking(arr[2], arr[1], arr[3]);
+		if(check == false)
+		{
+			System.out.println("CRACK FAILED");
+		}		
 	}
 }
